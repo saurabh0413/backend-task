@@ -1,19 +1,22 @@
 const express = require("express");
 const { connection } = require("./config/db");
 const cors = require("cors");
-const { userRoute } = require("./routes/login.routes");
+const { loginRoute } = require("./routes/login.routes");
 const { authentication } = require("./middlewares/authentication");
+const { userRoute } = require("./routes/user.routes");
+const { loginModel } = require("./models/login.model");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.get("/", (req, res) => {
-  res.send("welcome to home page man");
+app.get("/", async (req, res) => {
+  const data = await loginModel.find();
+  res.send(data);
 });
-app.use("/api/authenticate", userRoute);
-app.use(authentication)
-
+app.use("/api/authenticate", loginRoute);
+// app.use(authentication);
+app.use("/api/follow", userRoute);
 app.listen(8787, async () => {
   try {
     await connection;

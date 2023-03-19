@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const connection = mongoose.connect(
-  "mongodb+srv://saurabh:saurabh@cluster0.iaurlmb.mongodb.net/test"
-);
+const connection = mongoose.connect("mongodb://127.0.0.1:27017/reunion");
 module.exports = { connection };
