@@ -18,9 +18,9 @@ app.get("/", async (req, res) => {
 });
 app.use("/api/authenticate", loginRoute);
 app.use(authentication);
-app.use("/api/follow", userRoute);
+app.use("/api", userRoute);
 app.post("/api/unfollow/:id", unfollowController);
-app.use("/api/post", postRoute);
+app.use("/api/posts", postRoute);
 app.use("/api",postRoute)
 app.listen(8787, async () => {
   try {

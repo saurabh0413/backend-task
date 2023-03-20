@@ -3,8 +3,7 @@ const { default: mongoose } = require("mongoose");
 const commentSchema = mongoose.Schema(
   {
     comment: { type: String, required: true },
-    postId: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
-    userId: [{ type: mongoose.Schema.Types.ObjectId, ref: "login-details" }],
+    postId: { type: mongoose.Schema.Types.ObjectId, ref: "post" }
   },
   {
     versionKey: false,
@@ -12,6 +11,6 @@ const commentSchema = mongoose.Schema(
   }
 );
 
-const commentModel = mongoose.model("login-details", commentSchema);
+const commentModel = mongoose.model("comment", commentSchema);
 
 module.exports = { commentModel };

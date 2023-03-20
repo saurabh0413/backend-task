@@ -1,5 +1,16 @@
 const { loginModel } = require("../models/login.model");
 
+const getuserController = async (req, res) => {
+  const { userId } = req.body;
+  const userDetails = await loginModel.findOne({ _id: userId });
+  const User = {
+    username:userDetails.email,
+    followers:userDetails.followers.length,
+    following:userDetails.following.length
+  }
+  res.send(User);
+};
+
 const followController = async (req, res) => {
   try {
     let user = await loginModel.findOne({ _id: req.body.userId });
@@ -36,4 +47,4 @@ const unfollowController = async (req, res) => {
   }
 };
 
-module.exports = { followController, unfollowController };
+module.exports = { followController, unfollowController, getuserController };
