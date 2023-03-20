@@ -3,8 +3,9 @@ const { connection } = require("./config/db");
 const cors = require("cors");
 const { loginRoute } = require("./routes/login.routes");
 const { authentication } = require("./middlewares/authentication");
-const { userRoute } = require("./routes/user.routes");
 const { loginModel } = require("./models/login.model");
+const { userRoute } = require("./routes/user.routes");
+const { unfollowController } = require("./controllers/user.controller");
 
 const app = express();
 
@@ -15,8 +16,9 @@ app.get("/", async (req, res) => {
   res.send(data);
 });
 app.use("/api/authenticate", loginRoute);
-// app.use(authentication);
-app.use("/api/follow", userRoute);
+app.use(authentication);
+app.use("/api/follow",userRoute)
+app.post("/api/unfollow/:id",unfollowController)
 app.listen(8787, async () => {
   try {
     await connection;
