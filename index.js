@@ -6,6 +6,7 @@ const { authentication } = require("./middlewares/authentication");
 const { loginModel } = require("./models/login.model");
 const { userRoute } = require("./routes/user.routes");
 const { unfollowController } = require("./controllers/user.controller");
+const { postRoute } = require("./routes/post.routes");
 
 const app = express();
 
@@ -17,8 +18,10 @@ app.get("/", async (req, res) => {
 });
 app.use("/api/authenticate", loginRoute);
 app.use(authentication);
-app.use("/api/follow",userRoute)
-app.post("/api/unfollow/:id",unfollowController)
+app.use("/api/follow", userRoute);
+app.post("/api/unfollow/:id", unfollowController);
+app.use("/api/post", postRoute);
+app.use("/api",postRoute)
 app.listen(8787, async () => {
   try {
     await connection;
