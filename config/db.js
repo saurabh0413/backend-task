@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-
-const connection = mongoose.connect("mongodb://127.0.0.1:27017/reunion");
+require("dotenv").config();
+const connection = mongoose.connect(process.env.MONGO_URL);
 module.exports = { connection };

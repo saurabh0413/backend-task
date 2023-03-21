@@ -61,7 +61,7 @@ const commentController = async (req, res) => {
     const Post = await postModel.findOne({ _id: postId });
     await Post.updateOne({ $push: { comments: Comment } });
     //  res.send(Comment._id);
-    // res.status(200).json({ comment: Comment._id });
+     res.status(200).json({ comment: Comment._id });
   } catch (err) {
     console.log(err);
     return res.status(400).send(err.message);

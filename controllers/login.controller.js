@@ -1,6 +1,7 @@
 const { loginModel } = require("../models/login.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const loginController = async (req, res) => {
   const { email, password } = req.body;
 
@@ -19,7 +20,7 @@ const loginController = async (req, res) => {
 
       bcrypt.compare(password, hashed_pass, function (err, result) {
         if (result) {
-          const token = jwt.sign({ userId: result1._id }, "abcd1234");
+          const token = jwt.sign({ userId: result1._id }, process.env.SECRET_KEY);
           res.send({ msg: "login success", token: token });
         } else {
           res.send("Login Failed");

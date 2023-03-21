@@ -12,7 +12,7 @@ const {
 
 const postRoute = express.Router();
 
-postRoute.post("/", postController);
+postRoute.post("/posts", postController);
 postRoute.get("/posts", getPostsController);
 postRoute.get("/posts/:id",singlepostController)
 postRoute.get("/all_posts",allPostController)
