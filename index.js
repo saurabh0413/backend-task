@@ -20,9 +20,9 @@ app.use("/api/authenticate", loginRoute);
 app.use(authentication);
 app.use("/api", userRoute);
 app.post("/api/unfollow/:id", unfollowController);
-app.use("/api/posts", postRoute);
-app.use("/api",postRoute)
-app.listen(8787, async () => {
+app.use("/api", postRoute);
+
+module.exports = app.listen(8787, async () => {
   try {
     await connection;
     console.log("connection established");

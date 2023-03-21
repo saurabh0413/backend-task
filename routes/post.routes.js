@@ -13,10 +13,10 @@ const {
 const postRoute = express.Router();
 
 postRoute.post("/", postController);
-postRoute.get("/", getPostsController);
-postRoute.get("/:id",singlepostController)
+postRoute.get("/posts", getPostsController);
+postRoute.get("/posts/:id",singlepostController)
 postRoute.get("/all_posts",allPostController)
-postRoute.delete("/:id",deletePostController)
+postRoute.delete("/posts/:id",deletePostController)
 postRoute.post("/like/:id", likesController);
 postRoute.post("/unlike/:id", unlikeController);
 postRoute.post("/comment/:id", commentController);

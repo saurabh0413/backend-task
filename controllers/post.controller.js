@@ -22,10 +22,10 @@ const likesController = async (req, res) => {
     const postId = req.params.id;
     const post = await postModel.findOne({ _id: postId });
     if (post.likes.includes(postId)) {
-      res.status(403).json("post is already liked");
+      res.status(403).json({ msg: "post is already liked" });
     } else {
       await post.updateOne({ $push: { likes: req.params.id } });
-      res.status(200).json("post liked");
+      res.status(200).json({ msg: "post liked" });
     }
   } catch (err) {
     console.log(err);
@@ -60,8 +60,8 @@ const commentController = async (req, res) => {
     await Comment.save();
     const Post = await postModel.findOne({ _id: postId });
     await Post.updateOne({ $push: { comments: Comment } });
-    res.send(Comment._id);
-    // res.status(200).json("commente");
+    //  res.send(Comment._id);
+    // res.status(200).json({ comment: Comment._id });
   } catch (err) {
     console.log(err);
     return res.status(400).send(err.message);
@@ -80,7 +80,7 @@ const deletePostController = async (req, res) => {
 
     await postModel.deleteOne(post);
 
-    return res.send("post deleted");
+    return res.send({ message: "post deleted" });
   } catch (err) {
     console.log(err);
     return res.status(400).send(err.message);
@@ -98,9 +98,28 @@ const singlepostController = async (req, res) => {
   res.send(post1);
 };
 
-const allPostController = async(req,res)=>{
+const allPostController = async (req, res) => {
+  try {
+    const getPosts = await postModel
+      .find({ userId: req.body.userId })
+      .select("title description comments likes createdAt _id")
+      .sort({ ["createdAt"]: -1 })
+      .populate({ path: "comments" })
+      .lean();
 
-}
+    getPosts.map((post) => {
+      post.comments.map((comme, index) => {
+        post.comments[index] = { comment: comme.comment };
+      });
+      post.likes = post.likes.length;
+    });
+
+    res.send(getPosts);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err.message);
+  }
+};
 module.exports = {
   postController,
   getPostsController,
@@ -109,5 +128,5 @@ module.exports = {
   commentController,
   deletePostController,
   singlepostController,
-  allPostController
+  allPostController,
 };
