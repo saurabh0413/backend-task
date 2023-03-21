@@ -1,5 +1,6 @@
 const { loginModel } = require("../models/login.model");
 
+//to get single user using ID
 const getuserController = async (req, res) => {
   const { userId } = req.body;
   const userDetails = await loginModel.findOne({ _id: userId });
@@ -11,11 +12,13 @@ const getuserController = async (req, res) => {
   res.send(User);
 };
 
+//to follow user using ID
 const followController = async (req, res) => {
   try {
     let user = await loginModel.findOne({ _id: req.body.userId });
     let userFollow = await loginModel.findById(req.params.id);
     if (user) {
+      //if user to follow already in following list then cant follow again
       if (user.following.includes(req.params.id)) {
         res.status(403).json("alreay in following list");
       } else {
@@ -30,10 +33,12 @@ const followController = async (req, res) => {
   }
 };
 
+//to unfollow user using ID
 const unfollowController = async (req, res) => {
   try {
     let user = await loginModel.findOne({ _id: req.body.userId });
     let userUnfollow = await loginModel.findById(req.params.id);
+    //if user to unfollow not in following list then cant un follow again
     if (!user.following.includes(req.params.id)) {
       res.status(403).json("user not in following list, can't unfollow");
     } else {

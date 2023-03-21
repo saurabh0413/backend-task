@@ -1,6 +1,7 @@
 const { commentModel } = require("../models/comment.model");
 const { postModel } = require("../models/post.model");
 
+//creating post 
 const postController = async (req, res) => {
   let { title, description, userId } = req.body;
   const post = new postModel({
@@ -12,11 +13,13 @@ const postController = async (req, res) => {
   res.send(post);
 };
 
+//getting all posts
 const getPostsController = async (req, res) => {
   let data = await postModel.find();
   res.send(data);
 };
 
+//to like a post
 const likesController = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -33,6 +36,7 @@ const likesController = async (req, res) => {
   }
 };
 
+//to unlike a post
 const unlikeController = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -49,6 +53,7 @@ const unlikeController = async (req, res) => {
   }
 };
 
+//to comment on  a post
 const commentController = async (req, res) => {
   try {
     const { comment } = req.body;
@@ -68,6 +73,7 @@ const commentController = async (req, res) => {
   }
 };
 
+//to delete a post
 const deletePostController = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -87,6 +93,7 @@ const deletePostController = async (req, res) => {
   }
 };
 
+//to get a single post using postId
 const singlepostController = async (req, res) => {
   const post = await postModel.findOne({ _id: req.params.id });
   const post1 = {
@@ -98,6 +105,7 @@ const singlepostController = async (req, res) => {
   res.send(post1);
 };
 
+//get all posts created by authenticated user
 const allPostController = async (req, res) => {
   try {
     const getPosts = await postModel

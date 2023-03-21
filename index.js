@@ -18,6 +18,7 @@ app.get("/", async (req, res) => {
   res.send(data);
 });
 app.use("/api/authenticate", loginRoute);
+//authentication middleware
 app.use(authentication);
 app.use("/api", userRoute);
 app.post("/api/unfollow/:id", unfollowController);
